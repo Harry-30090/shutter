@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>MP3 Player at Custom Rate</title>
+</head>
+<body>
+    <h1>Play MP3 at Custom Rate</h1>
+    <label for="rate">Times per second:</label>
+    <input type="number" id="rate" min="1" step="1" value="30">
+    <br><br>
+    <button id="startBtn">Start</button>
+    <button id="stopBtn">Stop</button>
+
+    <script>
+        let intervalId = null;
+
+        document.getElementById('startBtn').addEventListener('click', () => {
+            const rate = parseFloat(document.getElementById('rate').value);
+            if (isNaN(rate) || rate <= 0) {
+                alert('Please enter a valid number greater than 0.');
+                return;
+            }
+
+            // Clear any existing interval
+            clearInterval(intervalId);
+
+            const intervalMs = 1000 / rate;
+            intervalId = setInterval(() => {
+                const audio = new Audio('SFX.mp3');
+                audio.play();
+            }, intervalMs);
+        });
+
+        document.getElementById('stopBtn').addEventListener('click', () => {
+            clearInterval(intervalId);
+            intervalId = null;
+        });
+    </script>
+</body>
+</html>
